@@ -13,12 +13,11 @@ request.onupgradeneeded = function(event) {
 
 // upon a successful
 request.onsuccess = function(event) {
-    // When db is successfully created with its object store (from onUpgradeNeeded event above) or simply established a connection, 
-    // save reference to db in global variable.
+    // When db is successfully created with its object store (from onUpgradeNeeded event above) or simply established a connection, save reference to db in global variable.
     db = event.target.result;
 
     // check if app is online,
-    if (navigator.online) {
+    if (navigator.onLine) {
         uploadPizza();
     }
 };
@@ -51,7 +50,7 @@ function uploadPizza() {
     const getAll = pizzaObjectStore.getAll();
 
     getAll.onsuccess = function() {
-        // if there was data in indexedDB's store, let's send it to the api server
+        // if there was records in indexedDB's store, let's send it to the api server
         if (getAll.result.length > 0) {
             fetch('/api/pizzas', {
                 method: 'POST',
